@@ -11,7 +11,7 @@ fi
 export BOILER_APP_NAME=new-boiler-app-$SDK_LANG
 export BOILER_APP_VERSION=app-toolkit@$SDK_VERSION
 export BOILER_APP_HOST=https://127.0.0.1:8080
-CYPRESS_IMAGE='020413372491.dkr.ecr.us-east-1.amazonaws.com/3rdparty/cypress/included:12.10.0'
+CYPRESS_IMAGE='020413372491.dkr.ecr.us-east-1.amazonaws.com/tools/gdc-frontend-cypress-factory:202311211156.11759a0'
 
 DIR=$(echo $(cd $(dirname "${BASH_SOURCE[0]}") && pwd -P))
 ROOT_DIR=$(echo $(cd $(dirname "${BASH_SOURCE[0]}")/../../../ && pwd -P))
@@ -38,7 +38,7 @@ $_RUSH install
 $_RUSH build -t sdk-ui-tests-e2e
 trap "docker rmi --force $CYPRESS_IMAGE || true" EXIT
 
-docker run --rm --entrypoint '' \
+docker run --user root --rm --entrypoint '' \
 -e BOILER_APP_NAME \
 -e BOILER_APP_VERSION \
 -e SDK_LANG \
